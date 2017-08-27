@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './App.scss';
 import '../assets/layout.scss'
 import Navbar from '../components/Navbar.js'
+import Listing from '../components/Listing.js'
 
 // @connect(
 //   state => ({
@@ -20,6 +21,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <Navbar />
+        <Listing />
       </div>
     );
   }

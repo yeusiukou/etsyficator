@@ -1,8 +1,9 @@
+$mainColor: #6765C6;
 .App{
-  height: 450px;
+  max-width: 300px;
   background: white;
   padding: 5px 20px;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   color: #AEB1B6;
 
@@ -20,7 +21,36 @@
       cursor: pointer;
     }
     .close:hover{
-      color: #6765C6;
+      color: $mainColor;
     }
+
+  }
+  a{
+    text-decoration: none;
+    color: #AEB1B6;
+    font-size: 16px;
+    margin: 5px;
+    outline: none;
+  }
+  a:hover{
+    color: $mainColor;
+  }
+
+  .button{
+    background: $mainColor;
+    width: 100%;
+    color: white;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+  }
+  .button:hover{
+    opacity: 0.9;
   }
 }
