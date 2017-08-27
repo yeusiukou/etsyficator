@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import style from './App.css';
+import './App.scss';
+import '../assets/layout.scss'
+import Navbar from '../components/Navbar.js'
 
 // @connect(
 //   state => ({
@@ -16,7 +18,9 @@ export default class App extends Component {
   render() {
 
     return (
-      <div>Spocket</div>
+      <div className="App">
+        <Navbar />
+      </div>
     );
   }
 }
