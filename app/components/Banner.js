@@ -9,7 +9,7 @@ class Banner extends Component {
 			<div className="Banner col-center-center">
 				<div className="title">{this.props.title}</div>
 				<img src={Logo} />
-				{this.props.text}
+				<div className="text">{this.props.text}</div>
 			</div>
 		)
 	}

@@ -5,13 +5,13 @@ import Navbar from '../components/Navbar.js'
 class Empty extends Component {
 	render () {
 		return (
-			<div className="col-start-center">
+			<div className="col-start-center" style={{height: "100%"}}>
 				<Navbar>Spocket</Navbar>
 				<Banner 
 					title="Thank you for using Spocket!"
 					text={getText()} />
-
-				<a href="#" style={{marginTop: "40px"}}>Log out</a>
+				<div className="flex-1" />
+				<a href="#">Log out</a>
 			</div>
 		)
 	}

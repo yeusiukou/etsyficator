@@ -5,6 +5,7 @@ import './App.scss';
 import '../assets/layout.scss'
 import Listing from '../components/Listing.js'
 import Empty from '../components/Empty.js'
+import Login from '../components/Login.js'
 
 // @connect(
 //   state => ({
@@ -21,7 +22,8 @@ export default class App extends Component {
     return (
       <div className="App">
         {/* <Listing /> */}
-        <Empty />
+        {/* <Empty /> */}
+        <Login />
       </div>
     );
   }
