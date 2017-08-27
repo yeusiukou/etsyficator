@@ -7,6 +7,7 @@ import Listing from '../components/Listing.js'
 import Empty from '../components/Empty.js'
 import Login from '../components/Login.js'
 import Removed from '../components/Removed.js'
+import Loading from '../components/Loading.js'
 
 // @connect(
 //   state => ({
@@ -25,7 +26,8 @@ export default class App extends Component {
         {/* <Listing /> */}
         {/* <Empty /> */}
         {/* <Login /> */}
-        <Removed />
+        {/* <Removed /> */}
+        <Loading />
       </div>
     );
   }
