@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './App.scss';
 import '../assets/layout.scss'
 import Listing from '../components/Listing.js'
+import Empty from '../components/Empty.js'
 
 // @connect(
 //   state => ({
@@ -19,7 +20,8 @@ export default class App extends Component {
 
     return (
       <div className="App">
-        <Listing />
+        {/* <Listing /> */}
+        <Empty />
       </div>
     );
   }
