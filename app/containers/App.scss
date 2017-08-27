@@ -2,29 +2,11 @@ $mainColor: #6765C6;
 .App{
   max-width: 300px;
   background: white;
-  padding: 5px 20px;
+  padding: 5px 20px 10px;
   font-size: 20px;
   font-weight: 400;
   color: #AEB1B6;
 
-  .Navbar{
-    height: 45px;
-
-    .logo{
-      width: 30px;
-      height: 30px;
-      margin-right: 10px;
-    }
-
-    .close{
-      font-size: 40px;
-      cursor: pointer;
-    }
-    .close:hover{
-      color: $mainColor;
-    }
-
-  }
   a{
     text-decoration: none;
     color: #AEB1B6;

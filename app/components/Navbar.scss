@@ -1,0 +1,22 @@
+$mainColor: #6765C6;
+
+.Navbar{
+	height: 45px;
+	width: 100%;
+	margin-bottom: 10px;
+
+	.logo{
+		width: 30px;
+		height: 30px;
+		margin-right: 10px;
+	}
+
+	.close{
+		font-size: 40px;
+		cursor: pointer;
+	}
+	.close:hover{
+		color: $mainColor;
+	}
+
+}

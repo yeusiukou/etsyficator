@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Navbar from '../components/Navbar.js'
 import './Listing.scss'
 import mock from '../assets/data.js'
 const data = mock.results[0];
@@ -7,6 +8,7 @@ class Listing extends Component {
 	render () {
 		return (
 			<div className="Listing col-start-center">
+				<Navbar>Item added!</Navbar>
 				<img className="image" src={data.MainImage.url_570xN} />
 				<div className="row-between-center" style={{width: '100%', padding: '5px'}}>
 					<img className="avatar" src={data.Shop.icon_url_fullxfull} />
