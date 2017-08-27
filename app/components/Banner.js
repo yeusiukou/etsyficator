@@ -15,7 +15,7 @@ class Banner extends Component {
 	}
 }
 Banner.propTypes = {
-	title: React.PropTypes.string,
-	text: React.PropTypes.string
+	title: PropTypes.string,
+	text: PropTypes.string
 };
 export default Banner
