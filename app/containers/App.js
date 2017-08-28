@@ -28,12 +28,26 @@ export default class App extends Component {
     
     return (
       <div className="App">
-        {/* <Listing /> */}
-        {/* <Empty /> */}
-        {/* <Login /> */}
-        <Removed />
-        {/* <Loading /> */}
+        {getScreen.bind(this)()}
       </div>
     );
+
+    function getScreen(){
+      if(!this.props.data.token)
+        return <Login />
+  
+      if(this.props.data.isLoading)
+        return <Loading />
+      if(this.props.data.isRemoved)
+        return <Removed />
+  
+      if(this.props.data.listing.url)
+        return <Listing />
+      else return <Empty />
+    }
+  }
+
+  componentWillMount(){
+    this.props.actions.fetchUrl();
   }
 }

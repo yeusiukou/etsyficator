@@ -15,7 +15,6 @@ class Banner extends Component {
 	}
 }
 Banner.propTypes = {
-	title: PropTypes.string,
-	text: PropTypes.string
+	title: PropTypes.string
 };
 export default Banner

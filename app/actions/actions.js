@@ -31,7 +31,7 @@ export function fetchUrl(){
 	const getUrl = function(){
 		return new Promise(resolve => {
 			chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, tabs => {
-				return tabs[0].url;
+				resolve(tabs[0].url);
 			})
 		})
 	}
@@ -56,7 +56,7 @@ export function fetchUrl(){
 						})
 						dispatch({
 							type: ActionTypes.ADD_LISTING,
-							data
+							listing: data.results[0]
 						})
 					})
 			}

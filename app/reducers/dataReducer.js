@@ -1,10 +1,10 @@
 import * as ActionTypes from '../constants/ActionTypes'
 
 const initialState = {
-	token: null,
+	token: 'fake token',
 	listing_id: null,
 	listing: {},
-	removed: false,
+	isRemoved: false,
 	isLoading: false
 }
 
@@ -13,7 +13,7 @@ export default function dataReducer (state = initialState, action) {
     case ActionTypes.ADD_LISTING:
       return {
         ...state,
-        listing: action.data
+        listing: action.listing
       }
     case ActionTypes.SET_LOADING:
       return {
