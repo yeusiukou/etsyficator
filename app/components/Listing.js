@@ -5,6 +5,11 @@ import './Listing.scss'
 let data = {};
 
 class Listing extends Component {
+
+	removeListing(){
+		this.props.actions.removeListing();
+	}
+
 	render () {
 		return (
 			<div className="Listing col-start-center">
@@ -22,7 +27,7 @@ class Listing extends Component {
 				<div className="price row-start-start">
 					{data.price}&nbsp;{data.currency_code}
 				</div>
-				<div className="button">Remove Product</div>
+				<div className="button" onClick={() => this.removeListing()}>Remove Product</div>
 				<a target="_blank" href="https://shopify.com">Open Shopify</a>
 			</div>
 		)

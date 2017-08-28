@@ -9,7 +9,7 @@ export default class Navbar extends Component{
 				<img className="logo" src={logo} />
 				<div>{this.props.children}</div>
 				<div className="flex-1" />
-				<div className="close">&times;</div>
+				<div className="close" onClick={() => close()}>&times;</div>
 			</div>
 		)
 	}
