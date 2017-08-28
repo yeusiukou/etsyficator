@@ -1,5 +1,5 @@
 import * as ActionTypes from '../constants/ActionTypes'
-import data from '../assets/data.js'
+import axios from 'axios'
 
 export function addListing(listing){
 	return {
@@ -59,6 +59,8 @@ export function logOut(){
 }
 
 export function fetchUrl(){
+	const ETSY_URL = 'https://openapi.etsy.com/v2/listings/'
+	const API_KEY = 'c499uq0hebkmkaynkdla4x3b'
 
 	const getId = function(url){
 		// get matches for 2 types of url: ...listing/269058820 and anchor_listing_id=467380344
@@ -68,8 +70,13 @@ export function fetchUrl(){
 	}
 	// load listing from Etsy's api
 	const fetchListing = function(id){
-		return new Promise((resolve, reject) => {
-			resolve(data);
+		return axios.get(ETSY_URL+id, {
+			params: {
+				api_key: API_KEY,
+				fields: 'title,url,description,price,tags,category_path,currency_code',
+				limit: '100s',
+				includes: 'User,MainImage,Shop,Variations'
+			}
 		})
 	}
 	const getUrl = function(){
@@ -93,14 +100,14 @@ export function fetchUrl(){
 				})
 	
 				fetchListing(listingId)
-					.then((data)=> {
+					.then((response)=> {
 						dispatch({
 							type: ActionTypes.SET_LOADING,
 							value: false
 						})
 						dispatch({
 							type: ActionTypes.ADD_LISTING,
-							listing: data.results[0]
+							listing: response.data.results[0]
 						})
 					})
 			}

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Navbar from '../components/Navbar.js'
 import './Listing.scss'
-import mock from '../assets/data.js'
-const data = mock.results[0];
+
+let data = {};
 
 class Listing extends Component {
 	render () {
@@ -10,7 +10,7 @@ class Listing extends Component {
 			<div className="Listing col-start-center">
 				<Navbar>Item added!</Navbar>
 				<img className="image" src={data.MainImage.url_570xN} />
-				<div className="row-between-center" style={{width: '100%', padding: '5px'}}>
+				<div className="row-between-center" style={{width: '100%', padding: '20px 5px'}}>
 					<img className="avatar" src={data.Shop.icon_url_fullxfull} />
 					<div className="col-start-end">
 						<div className="shop-name">{data.Shop.shop_name}</div>
@@ -26,6 +26,10 @@ class Listing extends Component {
 				<a target="_blank" href="https://shopify.com">Open Shopify</a>
 			</div>
 		)
+	}
+
+	componentWillMount(){
+		data = this.props.data.listing
 	}
 }
 

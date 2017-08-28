@@ -35,7 +35,7 @@ export default class App extends Component {
     function getScreen(){
       if(this.props.data.isLoading)
         return <Loading />
-        
+
       if(!this.props.data.token)
         return <Login {...this.props} />
   
@@ -43,7 +43,7 @@ export default class App extends Component {
         return <Removed />
   
       if(this.props.data.listing.url)
-        return <Listing />
+        return <Listing {...this.props} />
       else return <Empty {...this.props} />
     }
   }
