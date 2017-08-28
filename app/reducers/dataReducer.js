@@ -20,6 +20,11 @@ export default function dataReducer (state = initialState, action) {
         ...state,
         isLoading: action.value
       }
+    case ActionTypes.LOGIN:
+      return {
+        ...state,
+        token: action.token
+      }
     case ActionTypes.LOGOUT:
       return {
         ...state,

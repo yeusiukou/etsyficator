@@ -33,11 +33,12 @@ export default class App extends Component {
     );
 
     function getScreen(){
-      if(!this.props.data.token)
-        return <Login />
-  
       if(this.props.data.isLoading)
         return <Loading />
+        
+      if(!this.props.data.token)
+        return <Login {...this.props} />
+  
       if(this.props.data.isRemoved)
         return <Removed />
   

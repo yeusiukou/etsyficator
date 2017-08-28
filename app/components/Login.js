@@ -3,6 +3,11 @@ import Banner from './Banner'
 import Navbar from './Navbar'
 
 class Login extends Component {
+
+	logIn(){
+		this.props.actions.logIn();
+	}
+
 	render () {
 		return (
 			<div className="col-start-center">
@@ -10,7 +15,7 @@ class Login extends Component {
 				<Banner 
 					title="Thank you for using Spocket!"
 					text="Please log in to your Spocket account" />
-				<div className="button">Log in</div>
+				<div className="button" onClick={() => this.logIn()}>Log in</div>
 			</div>
 		)
 	}

@@ -14,9 +14,47 @@ export function removeListing(){
 	}
 }
 
+export function logIn(){
+	// this is a fake login
+	const processLogin = function(){
+		return new Promise(resolve => {
+			setTimeout(() => resolve('fake login'), 700)
+		})
+	}
+
+	return dispatch => {
+		dispatch({
+			type: ActionTypes.SET_LOADING,
+			value: true
+		})
+		processLogin().then(token => {
+			dispatch({
+				type: ActionTypes.SET_LOADING,
+				value: false
+			});
+			dispatch({
+				type: ActionTypes.LOGIN,
+				token
+			})
+		})
+	}
+}
+
 export function logOut(){
-	return {
-		type: ActionTypes.LOGOUT
+	return dispatch => {
+		dispatch({
+			type: ActionTypes.SET_LOADING,
+			value: true
+		})
+		setTimeout(() => {
+			dispatch({
+				type: ActionTypes.SET_LOADING,
+				value: false
+			})
+			dispatch({
+				type: ActionTypes.LOGOUT
+			})
+		}, 300)
 	}
 }
 
