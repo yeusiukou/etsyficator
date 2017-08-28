@@ -1,4 +1,4 @@
-import {ADD_LISTING, REMOVE_LISTING, LOGIN, LOGOUT} from '../constants/ActionTypes'
+import * as ActionTypes from '../constants/ActionTypes'
 
 const initialState = {
 	token: null,
@@ -10,10 +10,15 @@ const initialState = {
 
 export default function dataReducer (state = initialState, action) {
   switch (action.type) {
-    case ADD_LISTING:
+    case ActionTypes.ADD_LISTING:
       return {
         ...state,
-        data: action.data
+        listing: action.data
+      }
+    case ActionTypes.SET_LOADING:
+      return {
+        ...state,
+        isLoading: action.value
       }
     default:
       return state
