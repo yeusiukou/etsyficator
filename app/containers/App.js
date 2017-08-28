@@ -43,7 +43,7 @@ export default class App extends Component {
   
       if(this.props.data.listing.url)
         return <Listing />
-      else return <Empty />
+      else return <Empty {...this.props} />
     }
   }
 

@@ -14,6 +14,12 @@ export function removeListing(){
 	}
 }
 
+export function logOut(){
+	return {
+		type: ActionTypes.LOGOUT
+	}
+}
+
 export function fetchUrl(){
 
 	const getId = function(url){
