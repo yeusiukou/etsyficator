@@ -1,4 +1,5 @@
 import * as ActionTypes from '../constants/ActionTypes'
+import { TOKEN_KEY, API_KEY, ETSY_URL } from '../constants/constants'
 import axios from 'axios'
 
 export function addListing(listing){
@@ -18,7 +19,9 @@ export function logIn(){
 	// this is a fake login
 	const processLogin = function(){
 		return new Promise(resolve => {
-			setTimeout(() => resolve('fake login'), 700)
+			const token = 'fake token';
+			chrome.storage.local.set({[TOKEN_KEY]: token});
+			setTimeout(() => resolve(token), 700);
 		})
 	}
 
@@ -41,6 +44,10 @@ export function logIn(){
 }
 
 export function logOut(){
+
+	// Erase token from the local storage
+	chrome.storage.local.set({[TOKEN_KEY]: null});
+
 	return dispatch => {
 		dispatch({
 			type: ActionTypes.SET_LOADING,
@@ -59,8 +66,6 @@ export function logOut(){
 }
 
 export function fetchUrl(){
-	const ETSY_URL = 'https://openapi.etsy.com/v2/listings/'
-	const API_KEY = 'c499uq0hebkmkaynkdla4x3b'
 
 	const getId = function(url){
 		// get matches for 2 types of url: ...listing/269058820 and anchor_listing_id=467380344
@@ -112,5 +117,15 @@ export function fetchUrl(){
 					})
 			}
 		});
+	}
+}
+
+export function init(){
+	return dispatch => {
+		// Load user token from Chrome local storage
+		chrome.storage.local.get(TOKEN_KEY, result => dispatch({
+			type: ActionTypes.LOGIN,
+			token: result[TOKEN_KEY]
+		}));
 	}
 }

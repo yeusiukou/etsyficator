@@ -1,7 +1,8 @@
 import * as ActionTypes from '../constants/ActionTypes'
+import { TOKEN_KEY } from '../constants/constants'
 
 const initialState = {
-	token: 'fake token',
+	token: null,
 	listing_id: null,
 	listing: {},
 	isRemoved: false,

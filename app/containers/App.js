@@ -49,6 +49,7 @@ export default class App extends Component {
   }
 
   componentWillMount(){
+    this.props.actions.init();
     this.props.actions.fetchUrl();
   }
 }
