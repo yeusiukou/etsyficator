@@ -31,7 +31,7 @@ export default function buildProduct(data){
 			variants.push({
 				inventory_management: "shopify",
 				inventory_quantity: product.offerings[0].quantity,
-				price: product.offerings[0].price.before_conversion.amount/100,
+				price: product.offerings[0].price.amount/100,
 				sku: product.product_id,
 				...props
 			})
