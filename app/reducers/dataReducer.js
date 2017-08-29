@@ -6,7 +6,8 @@ const initialState = {
 	listing_id: null,
 	listing: {},
 	isRemoved: false,
-	isLoading: false
+  isLoading: false,
+  shopify_id: null
 }
 
 export default function dataReducer (state = initialState, action) {
@@ -22,7 +23,8 @@ export default function dataReducer (state = initialState, action) {
       return {
         ...state,
         listing: {},
-        isRemoved: true
+        isRemoved: true,
+        shopify_id: null
       }
 
     case ActionTypes.SET_LOADING:
@@ -41,6 +43,12 @@ export default function dataReducer (state = initialState, action) {
       return {
         ...state,
         token: null
+      }
+
+    case ActionTypes.SET_SHOPIFY_ID:
+      return {
+        ...state,
+        shopify_id: action.id
       }
 
     default:

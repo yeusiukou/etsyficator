@@ -7,7 +7,7 @@ let data = {};
 class Listing extends Component {
 
 	removeListing(){
-		this.props.actions.removeListing();
+		this.props.actions.removeListing(this.props.data.shopify_id);
 	}
 
 	render () {

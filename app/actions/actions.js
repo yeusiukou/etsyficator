@@ -4,6 +4,8 @@ import axios from 'axios'
 import api from '../assets/data.js'
 import productBuilder from './productBuilder'
 
+axios.defaults.headers.common['X-Shopify-Access-Token'] = "31147975fb9828f4b43a6ab8939dabec";
+
 export function addListing(listing){
 	return {
 		type: ActionTypes.ADD_LISTING,
@@ -11,9 +13,22 @@ export function addListing(listing){
 	}
 }
 
-export function removeListing(){
-	return {
-		type: ActionTypes.REMOVE_LISTING
+export function removeListing(id){
+	return dispatch => {
+		dispatch({
+			type: ActionTypes.SET_LOADING,
+			value: true
+		})
+		axios.delete(`https://alexsuperstore.myshopify.com/admin/products/${id}.json`).
+			then(() => {
+				dispatch({
+					type: ActionTypes.SET_LOADING,
+					value: false
+				})
+				dispatch({
+					type: ActionTypes.REMOVE_LISTING
+				})
+			})
 	}
 }
 
@@ -82,7 +97,7 @@ export function fetchUrl(){
 				api_key: API_KEY,
 				fields: 'title,url,description,price,tags,category_path,currency_code',
 				limit: '100s',
-				includes: 'User,MainImage,Shop,Variations'
+				includes: 'User,Images,MainImage,Shop,Variations,Inventory'
 			}
 		})
 	}
@@ -108,14 +123,26 @@ export function fetchUrl(){
 	
 				fetchListing(listingId)
 					.then((response)=> {
-						dispatch({
-							type: ActionTypes.SET_LOADING,
-							value: false
-						})
-						dispatch({
-							type: ActionTypes.ADD_LISTING,
-							listing: response.data.results[0]
-						})
+						postListing(dispatch, response.data.results[0])
+							.then(res => {
+								dispatch({
+									type: ActionTypes.SET_SHOPIFY_ID,
+									id: res.data.product.id
+								})
+								dispatch({
+									type: ActionTypes.SET_LOADING,
+									value: false
+								})
+								dispatch({
+									type: ActionTypes.SET_LOADING,
+									value: false
+								})
+								dispatch({
+									type: ActionTypes.ADD_LISTING,
+									listing: response.data.results[0]
+								})
+							})
+							.catch(err => console.log(err))
 					})
 			}
 		});
@@ -132,10 +159,12 @@ export function init(){
 	}
 }
 
-function uploadListing(){
-	axios.defaults.headers.common['X-Shopify-Access-Token'] = "31147975fb9828f4b43a6ab8939dabec";
-	axios.post(
+function postListing(dispatch, data){
+	dispatch({
+		type: ActionTypes.SET_LOADING,
+		value: true
+	})
+	return axios.post(
 		'https://alexsuperstore.myshopify.com/admin/products.json',
-		productBuilder(api.results[0])
-	).then((res => console.log(res))).catch(err => console.log(err));
+		productBuilder(data))
 }
