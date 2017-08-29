@@ -1,5 +1,5 @@
 {
-  "version": "0.0.0",
+  "version": "1.0.0",
   "name": "Spocket One-Click",
   "manifest_version": 2,
   "description": "Spocket Chrome Extension",
@@ -18,6 +18,7 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [ "contextMenus", "tabs", "storage", "https://github.com/*" ],
-  "content_security_policy": "script-src 'self' https://*.etsystatic.com https://*.etsy.com http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; object-src 'self'"
+  "permissions": [ "contextMenus", "management", "tabs", "storage", "identity",
+    "*://*.etsy.com/*", "*://*.etsystatic.com/*", "*://*.shopify.com/*", "*://*.myshopify.com/*"],
+  "content_security_policy": "script-src 'self' https://*.etsystatic.com https://*.etsy.com http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src https://*.etsystatic.com https://*.etsy.com https://*.shopify.com https://*.myshopify.com http://localhost:3000 https://localhost:3000; object-src 'self'"
 }

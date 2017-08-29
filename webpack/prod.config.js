@@ -41,7 +41,7 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       loader: 'babel',
-      exclude: /node_modules/,
+      exclude: [/node_modules/, /\.sass$/, /\.scss$/],
       query: {
         presets: ['react-optimize']
       }
@@ -52,6 +52,15 @@ module.exports = {
         'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
         'postcss'
       ]
-    }]
+    },
+    { 
+      test: /\.(png|jpg)$/,
+      loader: 'url-loader?limit=8192' 
+    },
+    {
+      test: /\.scss$/,
+      loaders: [ "style-loader", "css-loader", "sass-loader"]
+    },
+  ]
   }
 };
