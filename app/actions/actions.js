@@ -1,6 +1,8 @@
 import * as ActionTypes from '../constants/ActionTypes'
 import { TOKEN_KEY, API_KEY, ETSY_URL } from '../constants/constants'
 import axios from 'axios'
+import api from '../assets/data.js'
+import productBuilder from './productBuilder'
 
 export function addListing(listing){
 	return {
@@ -128,4 +130,12 @@ export function init(){
 			token: result[TOKEN_KEY]
 		}));
 	}
+}
+
+function uploadListing(){
+	axios.defaults.headers.common['X-Shopify-Access-Token'] = "31147975fb9828f4b43a6ab8939dabec";
+	axios.post(
+		'https://alexsuperstore.myshopify.com/admin/products.json',
+		productBuilder(api.results[0])
+	).then((res => console.log(res))).catch(err => console.log(err));
 }
