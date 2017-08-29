@@ -37,11 +37,13 @@ export function logIn(shopName){
 			value: true
 		})
 		chrome.identity.launchWebAuthFlow({ url: AUTH_URL+'auth/'+shopName,'interactive':true }, (redirect_url)=> {
-			console.log(redirect_url);
 			dispatch({
 				type: ActionTypes.SET_LOADING,
 				value: false
 			})
+			if(!redirect_url) //if shop doesn't exist don't proceed
+				// TODO: add UI notification
+				return;
 			const token = redirect_url.split('=')[1];
 			auth(dispatch, {token, shopName});
 		});
@@ -127,8 +129,8 @@ function fetchUrl(dispatch, shopName){
 							})
 						})
 						.catch(err => {
-							console.log(err.response);
-							if(err.response.status === 401)
+							// log out if auth is incorrect or token has expired
+							if(!err.response || err.response.status === 401)
 								logOut()(dispatch);
 						})
 				})
