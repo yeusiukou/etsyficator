@@ -28,7 +28,7 @@ class Listing extends Component {
 					{data.price}&nbsp;{data.currency_code}
 				</div>
 				<div className="button" onClick={() => this.removeListing()}>Remove Product</div>
-				<a target="_blank" href="https://shopify.com">Open Shopify</a>
+				<a target="_blank" href={`https://${this.props.data.account.shopName}.myshopify.com/admin/products/${this.props.data.shopifyId}`}>Open Shopify</a>
 			</div>
 		)
 	}
