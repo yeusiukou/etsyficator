@@ -1,3 +1,5 @@
+const VARIANT_LIMIT = 100; // Shopify limits number of variants to 100
+
 // Convert Etsy json object to be Shopify compatible
 export default function buildProduct(data){
 	const options = getOptions(data.Variations);
@@ -22,6 +24,10 @@ export default function buildProduct(data){
 			product.property_values.forEach(value => {
 					props['option'+getIndex(options, value.property_id)] = value.values[0]
 			});
+			
+			if(variants.length >= VARIANT_LIMIT)
+				return variants;
+			
 			variants.push({
 				inventory_management: "shopify",
 				inventory_quantity: product.offerings[0].quantity,
