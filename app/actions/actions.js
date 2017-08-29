@@ -1,10 +1,8 @@
 import * as ActionTypes from '../constants/ActionTypes'
-import { TOKEN_KEY, API_KEY, ETSY_URL } from '../constants/constants'
+import { ACCOUNT_KEY, API_KEY, ETSY_URL, getDeleteUrl, getPostUrl } from '../constants/constants'
 import axios from 'axios'
 import api from '../assets/data.js'
 import productBuilder from './productBuilder'
-
-axios.defaults.headers.common['X-Shopify-Access-Token'] = "31147975fb9828f4b43a6ab8939dabec";
 
 export function addListing(listing){
 	return {
@@ -13,13 +11,13 @@ export function addListing(listing){
 	}
 }
 
-export function removeListing(id){
+export function removeListing(id, shopName){
 	return dispatch => {
 		dispatch({
 			type: ActionTypes.SET_LOADING,
 			value: true
 		})
-		axios.delete(`https://alexsuperstore.myshopify.com/admin/products/${id}.json`).
+		axios.delete(getDeleteUrl(shopName, id)).
 			then(() => {
 				dispatch({
 					type: ActionTypes.SET_LOADING,
@@ -33,37 +31,20 @@ export function removeListing(id){
 }
 
 export function logIn(){
-	// this is a fake login
-	const processLogin = function(){
-		return new Promise(resolve => {
-			const token = 'fake token';
-			chrome.storage.local.set({[TOKEN_KEY]: token});
-			setTimeout(() => resolve(token), 700);
-		})
-	}
-
 	return dispatch => {
-		dispatch({
-			type: ActionTypes.SET_LOADING,
-			value: true
-		})
-		processLogin().then(token => {
-			dispatch({
-				type: ActionTypes.SET_LOADING,
-				value: false
-			});
-			dispatch({
-				type: ActionTypes.LOGIN,
-				token
-			})
-		})
+		// this is a fake login
+		const account = {
+			token: "31147975fb9828f4b43a6ab8939dabec",
+			shopName: "alexsuperstore"
+		}
+		auth(dispatch, account);
 	}
 }
 
 export function logOut(){
 
 	// Erase token from the local storage
-	chrome.storage.local.set({[TOKEN_KEY]: null});
+	chrome.storage.local.set({[ACCOUNT_KEY]: null});
 
 	return dispatch => {
 		dispatch({
@@ -82,7 +63,7 @@ export function logOut(){
 	}
 }
 
-export function fetchUrl(){
+function fetchUrl(dispatch, shopName){
 
 	const getId = function(url){
 		// get matches for 2 types of url: ...listing/269058820 and anchor_listing_id=467380344
@@ -101,7 +82,7 @@ export function fetchUrl(){
 			}
 		})
 	}
-	const getUrl = function(){
+	const getUrl = function(dispatch){
 		return new Promise(resolve => {
 			chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, tabs => {
 				resolve(tabs[0].url);
@@ -109,62 +90,65 @@ export function fetchUrl(){
 		})
 	}
 
-	return dispatch => {
-		// get url of the current Chrome tab
-		getUrl().then(url => {
-			const listingId = getId(url)
-			// if the url contains listing id, fetch it
-			if(listingId){
-				// show loading spinner
-				dispatch({
-					type: ActionTypes.SET_LOADING,
-					value: true
-				})
-	
-				fetchListing(listingId)
-					.then((response)=> {
-						postListing(dispatch, response.data.results[0])
-							.then(res => {
-								dispatch({
-									type: ActionTypes.SET_SHOPIFY_ID,
-									id: res.data.product.id
-								})
-								dispatch({
-									type: ActionTypes.SET_LOADING,
-									value: false
-								})
-								dispatch({
-									type: ActionTypes.SET_LOADING,
-									value: false
-								})
-								dispatch({
-									type: ActionTypes.ADD_LISTING,
-									listing: response.data.results[0]
-								})
+	// get url of the current Chrome tab
+	getUrl().then(url => {
+		const listingId = getId(url)
+		// if the url contains listing id, fetch it
+		if(listingId){
+			// show loading spinner
+			dispatch({
+				type: ActionTypes.SET_LOADING,
+				value: true
+			})
+
+			fetchListing(listingId)
+				.then((response)=> {
+					postListing(dispatch, response.data.results[0], shopName)
+						.then(res => {
+							dispatch({
+								type: ActionTypes.SET_SHOPIFY_ID,
+								id: res.data.product.id
 							})
-							.catch(err => console.log(err))
-					})
+							dispatch({
+								type: ActionTypes.SET_LOADING,
+								value: false
+							})
+							dispatch({
+								type: ActionTypes.ADD_LISTING,
+								listing: response.data.results[0]
+							})
+						})
+						.catch(err => console.log(err))
+				})
 			}
 		});
-	}
 }
 
 export function init(){
 	return dispatch => {
-		// Load user token from Chrome local storage
-		chrome.storage.local.get(TOKEN_KEY, result => dispatch({
-			type: ActionTypes.LOGIN,
-			token: result[TOKEN_KEY]
-		}));
+		// Load auth info from Chrome local storage
+		chrome.storage.local.get(ACCOUNT_KEY, result => {
+			// if there is account information
+			if(result[ACCOUNT_KEY])
+				auth(dispatch, result[ACCOUNT_KEY]);
+		});
 	}
 }
 
-function postListing(dispatch, data){
+function postListing(dispatch, data, shopName){
 	dispatch({
 		type: ActionTypes.SET_LOADING,
 		value: true
 	})
-	return axios.post(
-		'https://alexsuperstore.myshopify.com/admin/products.json',
-		productBuilder(data))
+	return axios.post(getPostUrl(shopName), productBuilder(data))
+}
+
+function auth(dispatch, account){
+	chrome.storage.local.set({[ACCOUNT_KEY]: account});
+	axios.defaults.headers.common['X-Shopify-Access-Token'] = account.token;
+	dispatch({
+		type: ActionTypes.LOGIN,
+		account
+	});
+	fetchUrl(dispatch, account.shopName);
 }

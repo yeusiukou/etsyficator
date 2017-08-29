@@ -36,12 +36,12 @@ export default class App extends Component {
       if(this.props.data.isLoading)
         return <Loading />
 
-      if(!this.props.data.token)
+      if(!this.props.data.account.token)
         return <Login {...this.props} />
   
       if(this.props.data.isRemoved)
         return <Removed />
-  
+        
       if(this.props.data.listing.url)
         return <Listing {...this.props} />
       else return <Empty {...this.props} />
@@ -50,6 +50,5 @@ export default class App extends Component {
 
   componentWillMount(){
     this.props.actions.init();
-    this.props.actions.fetchUrl();
   }
 }

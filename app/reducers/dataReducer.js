@@ -2,12 +2,14 @@ import * as ActionTypes from '../constants/ActionTypes'
 import { TOKEN_KEY } from '../constants/constants'
 
 const initialState = {
-	token: null,
-	listing_id: null,
+  account: {
+    token: null,
+    shopName: null,
+  },
 	listing: {},
 	isRemoved: false,
   isLoading: false,
-  shopify_id: null
+  shopifyId: null
 }
 
 export default function dataReducer (state = initialState, action) {
@@ -24,7 +26,7 @@ export default function dataReducer (state = initialState, action) {
         ...state,
         listing: {},
         isRemoved: true,
-        shopify_id: null
+        shopifyId: null
       }
 
     case ActionTypes.SET_LOADING:
@@ -36,19 +38,19 @@ export default function dataReducer (state = initialState, action) {
     case ActionTypes.LOGIN:
       return {
         ...state,
-        token: action.token
+        account: action.account
       }
 
     case ActionTypes.LOGOUT:
       return {
         ...state,
-        token: null
+        account: {}
       }
 
     case ActionTypes.SET_SHOPIFY_ID:
       return {
         ...state,
-        shopify_id: action.id
+        shopifyId: action.id
       }
 
     default:
