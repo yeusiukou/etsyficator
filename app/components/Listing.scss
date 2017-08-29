@@ -3,6 +3,9 @@
 
 	.image{
 		max-width: 100%;
+		width: 100%;
+		object-fit: cover;
+		max-height: 200px;
 		border-radius: 8px;
 		box-shadow: 0 2px 2px #B9B5B5;
 	}

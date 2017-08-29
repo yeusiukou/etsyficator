@@ -16,10 +16,17 @@ const barStyle = {
 	marginBottom: '30px'
 }
 const mainStyle = {
-	position: 'relative'
+	position: 'relative',
+	height: '100%'
 }
 
 class Removed extends Component {
+
+	logOut(e){
+		e.preventDefault();
+		this.props.actions.logOut();
+	}
+
 	render () {
 		return (
 			<div className="col-start-center" style={mainStyle}>
@@ -27,6 +34,8 @@ class Removed extends Component {
 				<div style={barStyle}/>
 				<Banner title="The item has been removed" />
 				<div className="icon" style={iconStyle}>&times;</div>
+				<div className="flex-1" />
+				<a href="#" onClick={e => this.logOut(e)}>Log out</a>
 			</div>
 		)
 	}

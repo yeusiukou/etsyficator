@@ -40,7 +40,7 @@ export default class App extends Component {
         return <Login {...this.props} />
   
       if(this.props.data.isRemoved)
-        return <Removed />
+        return <Removed {...this.props} />
         
       if(this.props.data.listing.url)
         return <Listing {...this.props} />

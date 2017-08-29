@@ -23,4 +23,11 @@
 	.button{
 		margin: 0;
 	}
+
+	.text{
+		text-overflow: ellipsis;
+		overflow: hidden;
+		width: 230px;
+		white-space: nowrap;
+	}
 }
