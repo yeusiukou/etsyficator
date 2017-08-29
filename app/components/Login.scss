@@ -1,0 +1,26 @@
+.Login{
+	input{
+		width: 100%;
+		font-size: 18px;
+		border: solid 2px #F4F0F0;
+		padding: 9px 22px;
+		border-radius: 10px;
+		margin-bottom: 15px;
+		outline: none;
+		color: grey;
+		font-style: italic;
+	}
+	input:hover, input:focus{
+		border-color: #8D8BC8;
+	}
+	input::placeholder{
+		color: #B8B8B8;
+	}
+	.error{
+		border-color: #BF0B0B;
+	}
+
+	.button{
+		margin: 0;
+	}
+}

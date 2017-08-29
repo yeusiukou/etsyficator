@@ -1,5 +1,5 @@
 import * as ActionTypes from '../constants/ActionTypes'
-import { ACCOUNT_KEY, API_KEY, ETSY_URL, getDeleteUrl, getPostUrl } from '../constants/constants'
+import { ACCOUNT_KEY, API_KEY, ETSY_URL, getDeleteUrl, getPostUrl, AUTH_URL } from '../constants/constants'
 import axios from 'axios'
 import api from '../assets/data.js'
 import productBuilder from './productBuilder'
@@ -30,14 +30,26 @@ export function removeListing(id, shopName){
 	}
 }
 
-export function logIn(){
+export function logIn(shopName){
 	return dispatch => {
-		// this is a fake login
-		const account = {
-			token: "31147975fb9828f4b43a6ab8939dabec",
-			shopName: "alexsuperstore"
+		chrome.windows.create({ url: AUTH_URL+'auth/'+shopName, 'type': 'popup' });
+		// wait for OAuth redirect and then proceed
+		listenForAuth(token => {
+			auth(dispatch, {token, shopName});
+		});
+
+		function listenForAuth(cb){
+			chrome.tabs.onUpdated.addListener(function authorizationHook(tabId, changeInfo, tab) {
+				if(tab.title.indexOf(AUTH_URL+"success") >=0){//tab url consists of access_token
+					const token = tab.title.split('=')[1];
+					/* Code to extract token from url */
+					chrome.tabs.onUpdated.removeListener(authorizationHook);          
+					chrome.tabs.remove(tab.id);
+					cb(token);
+				}                 
+			});
 		}
-		auth(dispatch, account);
+
 	}
 }
 

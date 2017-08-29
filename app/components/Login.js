@@ -1,21 +1,37 @@
 import React, { Component } from 'react'
+import './Login.scss'
 import Banner from './Banner'
 import Navbar from './Navbar'
 
 class Login extends Component {
 
-	logIn(){
-		this.props.actions.logIn();
+	constructor(){
+		super();
+		this.state = {
+			error: false
+		}
+	}
+
+	logIn(e){
+		e.preventDefault();
+		if(this.textInput.value)
+			this.props.actions.logIn(this.textInput.value.replace('shopify.com', ''));
+		else this.setState({error: true})
 	}
 
 	render () {
 		return (
-			<div className="col-start-center">
+			<div className="Login col-start-center">
 				<Navbar>Welcome</Navbar>
-				<Banner 
-					title="Thank you for using Spocket!"
-					text="Please log in to your Spocket account" />
-				<div className="button" onClick={() => this.logIn()}>Log in</div>
+				<Banner title="Log in to your Shopify store" />
+
+				<form onSubmit={(e) => this.logIn(e)}>
+					<input 
+						ref={(input) => { this.textInput = input; }} 
+						spellCheck="false" autoFocus={true} placeholder={'myshop.shopify.com'}
+						className={this.state.error ? 'error' : ''} />
+					<div className="button" onClick={(e) => this.logIn(e)}>Log in</div>
+				</form>
 			</div>
 		)
 	}
