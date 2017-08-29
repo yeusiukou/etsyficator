@@ -37,6 +37,7 @@ export function logIn(shopName){
 			value: true
 		})
 		chrome.identity.launchWebAuthFlow({ url: AUTH_URL+'auth/'+shopName,'interactive':true }, (redirect_url)=> {
+			console.log(redirect_url);
 			dispatch({
 				type: ActionTypes.SET_LOADING,
 				value: false
@@ -125,7 +126,11 @@ function fetchUrl(dispatch, shopName){
 								id: res.data.product.id
 							})
 						})
-						.catch(err => console.log(err))
+						.catch(err => {
+							console.log(err.response);
+							if(err.response.status === 401)
+								logOut()(dispatch);
+						})
 				})
 			}
 		});
