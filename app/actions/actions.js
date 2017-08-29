@@ -32,24 +32,18 @@ export function removeListing(id, shopName){
 
 export function logIn(shopName){
 	return dispatch => {
-		chrome.windows.create({ url: AUTH_URL+'auth/'+shopName, 'type': 'popup' });
-		// wait for OAuth redirect and then proceed
-		listenForAuth(token => {
+		dispatch({
+			type: ActionTypes.SET_LOADING,
+			value: true
+		})
+		chrome.identity.launchWebAuthFlow({ url: AUTH_URL+'auth/'+shopName,'interactive':true }, (redirect_url)=> {
+			dispatch({
+				type: ActionTypes.SET_LOADING,
+				value: false
+			})
+			const token = redirect_url.split('=')[1];
 			auth(dispatch, {token, shopName});
 		});
-
-		function listenForAuth(cb){
-			chrome.tabs.onUpdated.addListener(function authorizationHook(tabId, changeInfo, tab) {
-				if(tab.title.indexOf(AUTH_URL+"success") >=0){//tab url consists of access_token
-					const token = tab.title.split('=')[1];
-					/* Code to extract token from url */
-					chrome.tabs.onUpdated.removeListener(authorizationHook);          
-					chrome.tabs.remove(tab.id);
-					cb(token);
-				}                 
-			});
-		}
-
 	}
 }
 
