@@ -7,13 +7,19 @@ let data = {};
 class Listing extends Component {
 
 	removeListing(){
-		this.props.actions.removeListing(this.props.data.shopifyId, this.props.data.account.shopName);
+		if(this.props.data.shopifyId)
+			this.props.actions.removeListing(this.props.data.shopifyId, this.props.data.account.shopName);
+	}
+
+	getLink(){
+		if(this.props.data.shopifyId)
+			return <a target="_blank" href={`https://${this.props.data.account.shopName}.myshopify.com/admin/products/${this.props.data.shopifyId}`}>Open Shopify</a>
 	}
 
 	render () {
 		return (
 			<div className="Listing col-start-center">
-				<Navbar>Item added!</Navbar>
+				<Navbar>{this.props.data.shopifyId ? 'Item added!' : ''}</Navbar>
 				<img className="image" src={data.MainImage.url_570xN} />
 				<div className="row-between-center" style={{width: '100%', padding: '20px 5px'}}>
 					<img className="avatar" src={data.Shop.icon_url_fullxfull} />
@@ -28,7 +34,7 @@ class Listing extends Component {
 					{data.price}&nbsp;{data.currency_code}
 				</div>
 				<div className="button" onClick={() => this.removeListing()}>Remove Product</div>
-				<a target="_blank" href={`https://${this.props.data.account.shopName}.myshopify.com/admin/products/${this.props.data.shopifyId}`}>Open Shopify</a>
+				{this.getLink.bind(this)()}
 			</div>
 		)
 	}

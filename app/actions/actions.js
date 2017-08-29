@@ -115,19 +115,20 @@ function fetchUrl(dispatch, shopName){
 
 			fetchListing(listingId)
 				.then((response)=> {
+					dispatch({
+						type: ActionTypes.SET_LOADING,
+						value: false
+					})
+					dispatch({
+						type: ActionTypes.ADD_LISTING,
+						listing: response.data.results[0]
+					})
+					
 					postListing(dispatch, response.data.results[0], shopName)
 						.then(res => {
 							dispatch({
 								type: ActionTypes.SET_SHOPIFY_ID,
 								id: res.data.product.id
-							})
-							dispatch({
-								type: ActionTypes.SET_LOADING,
-								value: false
-							})
-							dispatch({
-								type: ActionTypes.ADD_LISTING,
-								listing: response.data.results[0]
 							})
 						})
 						.catch(err => console.log(err))
@@ -148,10 +149,6 @@ export function init(){
 }
 
 function postListing(dispatch, data, shopName){
-	dispatch({
-		type: ActionTypes.SET_LOADING,
-		value: true
-	})
 	return axios.post(getPostUrl(shopName), productBuilder(data))
 }
 
