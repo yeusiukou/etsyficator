@@ -11,9 +11,25 @@ class Listing extends Component {
 			this.props.actions.removeListing(this.props.data.shopifyId, this.props.data.account.shopName);
 	}
 
-	getLink(){
+	getProductButtons(){
 		if(this.props.data.shopifyId)
-			return <a target="_blank" href={`https://${this.props.data.account.shopName}.myshopify.com/admin/products/${this.props.data.shopifyId}`}>Open Shopify</a>
+			return(
+				<div className="col-start-center" style={{width: '100%'}}>
+					<div className="button" onClick={() => this.removeListing()}>Remove Item</div>
+					<a target="_blank" href={`https://${this.props.data.account.shopName}.myshopify.com/admin/products/${this.props.data.shopifyId}`}>Open Shopify</a>
+				</div>
+			)
+	}
+	getPlaceholder(){
+		if(!this.props.data.shopifyId)
+			return(
+				<div className="placeholder row-center-center">
+					<div className="loading">
+						<div className="spinner" />
+					</div>
+					<span>Adding item</span>
+				</div>
+			)
 	}
 
 	render () {
@@ -33,8 +49,9 @@ class Listing extends Component {
 				<div className="price row-start-start">
 					{data.price}&nbsp;{data.currency_code}
 				</div>
-				<div className="button" onClick={() => this.removeListing()}>Remove Product</div>
-				{this.getLink.bind(this)()}
+				
+				{this.getProductButtons.bind(this)()}
+				{this.getPlaceholder.bind(this)()}
 			</div>
 		)
 	}
