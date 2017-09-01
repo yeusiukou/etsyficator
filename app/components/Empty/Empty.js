@@ -11,7 +11,7 @@ class Empty extends Component {
 
 	getText(){
 		return (
-			<div>
+			<div className="hint">
 				Now go to<a target="_blank" href="https://etsy.com">Etsy.com</a> 
 				and start dropshipping with one click!
 			</div>
@@ -26,7 +26,7 @@ class Empty extends Component {
 					title="Thank you for using Spocket!"
 					text={this.getText()} />
 				<div className="flex-1" />
-				<a href="#" onClick={e => this.logOut(e)}>Log out</a>
+				<a className="logOut" href="#" onClick={e => this.logOut(e)}>Log out</a>
 			</div>
 		)
 	}
