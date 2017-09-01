@@ -4,11 +4,11 @@ import * as actionCreators from '../actions/actions'
 import { connect } from 'react-redux';
 import './App.scss';
 import '../assets/layout.scss'
-import Listing from '../components/Listing.js'
-import Empty from '../components/Empty.js'
-import Login from '../components/Login.js'
-import Removed from '../components/Removed.js'
-import Loading from '../components/Loading.js'
+import Listing from '../components/Listing/Listing'
+import Empty from '../components/Empty/Empty'
+import Login from '../components/Login/Login'
+import Removed from '../components/Removed/Removed'
+import Loading from '../components/Loading/Loading'
 
 
 // I use decorators here, otherwise it can be written as

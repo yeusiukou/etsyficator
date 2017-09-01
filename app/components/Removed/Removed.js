@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Banner from './Banner'
-import Navbar from '../components/Navbar'
+import Banner from '../Banner/Banner'
+import Navbar from '../Navbar/Navbar'
 
 const iconStyle = {
 	position: 'absolute',

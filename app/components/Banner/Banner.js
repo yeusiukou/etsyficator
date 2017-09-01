@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import './Banner.scss'
-import Logo from '../assets/images/logo-grey.png'
+import Logo from '../../assets/images/logo-grey.png'
 
 class Banner extends Component {
 	render () {
