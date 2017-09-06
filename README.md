@@ -1,5 +1,6 @@
-# Spocket Chrome Extension
-Add listings with one click
+# Etsyficator - One-click Etsy to Shopify importer
+Chrome extension which adds Etsy listings to your Shopify store with one click
+<img src="https://user-images.githubusercontent.com/8567013/30138635-42cebe0e-931e-11e7-9176-3b638eefdb0c.png">
 
 ## Installation
 

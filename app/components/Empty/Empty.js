@@ -21,9 +21,9 @@ class Empty extends Component {
 	render () {
 		return (
 			<div className="col-start-center" style={{height: "100%"}}>
-				<Navbar>Spocket</Navbar>
+				<Navbar>Etsyficator</Navbar>
 				<Banner 
-					title="Thank you for using Spocket!"
+					title="Thank you for using Etsyficator!"
 					text={this.getText()} />
 				<div className="flex-1" />
 				<a className="logOut" href="#" onClick={e => this.logOut(e)}>Log out</a>

@@ -1,7 +1,7 @@
 {
-  "name": "Spocket-Extension",
+  "name": "Etsyficator",
   "version": "0.1.0",
-  "description": "Chrome extension for Spocket",
+  "description": "One-click Etsy to Shopify importer",
   "author": "Alex Yeusiukou",
   "scripts": {
     "dev": "node scripts/dev",

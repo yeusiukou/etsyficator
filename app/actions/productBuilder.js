@@ -7,7 +7,7 @@ export default function buildProduct(data){
 		"product": {
 			title: data.title,
 			body_html: data.description,
-			vendor: "Spocket",
+			vendor: "Etsyficator",
 			product_type: data.category_path[0],
 			tags: data.tags,
 			images: data.Images.map(image => {return {src: image.url_fullxfull}}),

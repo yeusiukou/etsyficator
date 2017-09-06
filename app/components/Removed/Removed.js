@@ -30,7 +30,7 @@ class Removed extends Component {
 	render () {
 		return (
 			<div className="col-start-center" style={mainStyle}>
-				<Navbar>Spocket</Navbar>
+				<Navbar>Etsyficator</Navbar>
 				<div style={barStyle}/>
 				<Banner title="The item has been removed" />
 				<div className="icon" style={iconStyle}>&times;</div>
