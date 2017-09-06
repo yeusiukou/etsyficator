@@ -1,5 +1,6 @@
 # Etsyficator - One-click Etsy to Shopify importer
-Chrome extension which adds Etsy listings to your Shopify store with one click
+Chrome extension which adds Etsy listings to your Shopify store with one click.
+The extension is built with React, Redux and Redux-Thunk.
 <img src="https://user-images.githubusercontent.com/8567013/30138635-42cebe0e-931e-11e7-9176-3b638eefdb0c.png">
 
 ## Installation
