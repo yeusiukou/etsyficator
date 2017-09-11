@@ -8,4 +8,4 @@ export const ERRORS = {
 	402: "Payment required. Please check your Shopify's plan.",
 	0: "Authentication has not been approved."
 }
-export const AUTH_URL = 'https://shopifyauth.now.sh/'
+export const {AUTH_URL} = process.env

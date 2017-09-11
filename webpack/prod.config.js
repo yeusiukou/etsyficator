@@ -30,8 +30,9 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
+        NODE_ENV: JSON.stringify('production'),
+        AUTH_URL: JSON.stringify('https://shopifyauth.now.sh/')
+      },
     })
   ],
   resolve: {

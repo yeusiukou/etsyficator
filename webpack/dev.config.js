@@ -40,8 +40,9 @@ const baseDevConfig = () => ({
       __HOST__: `'${host}'`,
       __PORT__: port,
       'process.env': {
-        NODE_ENV: JSON.stringify('development')
-      }
+        NODE_ENV: JSON.stringify('development'),
+        AUTH_URL: JSON.stringify('http://localhost:5000/')
+      },
     })
   ],
   resolve: {
