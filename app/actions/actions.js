@@ -47,10 +47,11 @@ export function logIn(shopName){
 					type: ActionTypes.SET_LOADING,
 					value: false
 				})
-				if(!redirect_url) 
-					//if shop wasn't authorized don't proceed
+				if(!redirect_url){
+					//Stop if shop wasn't authorized
 					showError(0)(dispatch);
 					return;
+				}
 				const token = redirect_url.split('=')[1];
 				auth(dispatch, {token, shopName});
 			});
