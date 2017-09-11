@@ -1,5 +1,5 @@
 import * as ActionTypes from '../constants/ActionTypes'
-import { ACCOUNT_KEY, API_KEY, ETSY_URL, getDeleteUrl, getPostUrl, AUTH_URL } from '../constants/constants'
+import { ACCOUNT_KEY, API_KEY, ETSY_URL, getDeleteUrl, getPostUrl, AUTH_URL, ERRORS } from '../constants/constants'
 import axios from 'axios'
 import api from '../assets/data.js'
 import productBuilder from './productBuilder'
@@ -32,26 +32,40 @@ export function removeListing(id, shopName){
 
 export function logIn(shopName){
 	return dispatch => {
+		// Show loading screen
 		dispatch({
 			type: ActionTypes.SET_LOADING,
 			value: true
 		})
-		chrome.identity.launchWebAuthFlow({ url: AUTH_URL+'auth/'+shopName,'interactive':true }, (redirect_url)=> {
+		// Check if the shop exists
+		validateShop(shopName).then(() => {
+			chrome.identity.launchWebAuthFlow({ 
+				url: AUTH_URL+'auth/'+shopName,
+				interactive: true 
+			}, (redirect_url)=> {
+				dispatch({
+					type: ActionTypes.SET_LOADING,
+					value: false
+				})
+				if(!redirect_url) 
+					//if shop wasn't authorized don't proceed
+					showError(0)(dispatch);
+					return;
+				const token = redirect_url.split('=')[1];
+				auth(dispatch, {token, shopName});
+			});
+		}).catch((err) => {
 			dispatch({
 				type: ActionTypes.SET_LOADING,
 				value: false
 			})
-			if(!redirect_url) //if shop doesn't exist don't proceed
-				// TODO: add UI notification
-				return;
-			const token = redirect_url.split('=')[1];
-			auth(dispatch, {token, shopName});
-		});
+			// Notify about the request error
+			showError(err.response.status)(dispatch);
+		})
 	}
 }
 
 export function logOut(){
-
 	// Erase token from the local storage
 	chrome.storage.local.set({[ACCOUNT_KEY]: null});
 
@@ -143,8 +157,16 @@ export function init(){
 		// Load auth info from Chrome local storage
 		chrome.storage.local.get(ACCOUNT_KEY, result => {
 			// if there is account information
-			if(result[ACCOUNT_KEY])
-				auth(dispatch, result[ACCOUNT_KEY]);
+			const account = result[ACCOUNT_KEY];
+			if(account){
+				if(account.token)
+					auth(dispatch, account);
+				// if there is only shopName add it to the store
+				else dispatch({
+					type: ActionTypes.LOGIN,
+					account
+				});
+			}
 		});
 	}
 }
@@ -161,4 +183,25 @@ function auth(dispatch, account){
 		account
 	});
 	fetchUrl(dispatch, account.shopName);
+}
+
+// Validates and saves the shop name to the local storage
+function validateShop(name){
+	return new Promise((resolve, reject) => {
+		axios.get(`https://${name}.myshopify.com`).then(res => {
+			chrome.storage.local.set({[ACCOUNT_KEY]: {shopName: name}});
+			resolve();
+		}).catch(reject);
+	});
+}
+
+function showError(status){
+	return dispatch => {
+		let message = ERRORS[status] ? ERRORS[status] : "Error "+status;
+		console.log(message);
+		dispatch({
+			type: ActionTypes.ERROR,
+			message
+		});
+	}
 }

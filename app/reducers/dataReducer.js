@@ -9,7 +9,8 @@ const initialState = {
 	listing: {},
 	isRemoved: false,
   isLoading: false,
-  shopifyId: null
+  shopifyId: null,
+  error: null
 }
 
 export default function dataReducer (state = initialState, action) {
@@ -51,6 +52,12 @@ export default function dataReducer (state = initialState, action) {
       return {
         ...state,
         shopifyId: action.id
+      }
+
+    case ActionTypes.ERROR:
+      return {
+        ...state,
+        error: action.message
       }
 
     default:

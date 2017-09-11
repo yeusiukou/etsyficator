@@ -9,6 +9,7 @@ import Empty from '../components/Empty/Empty'
 import Login from '../components/Login/Login'
 import Removed from '../components/Removed/Removed'
 import Loading from '../components/Loading/Loading'
+import Continue from '../components/Continue/Continue'
 
 
 // I use decorators here, otherwise it can be written as
@@ -33,11 +34,16 @@ export default class App extends Component {
     );
 
     function getScreen(){
+      const account = this.props.data.account;
+
       if(this.props.data.isLoading)
         return <Loading />
-
-      if(!this.props.data.account.token)
-        return <Login {...this.props} />
+      
+      if(!account.token){
+        if(account.shopName)
+          return <Continue {...this.props} />
+        else return <Login {...this.props} />
+      }
   
       if(this.props.data.isRemoved)
         return <Removed {...this.props} />
