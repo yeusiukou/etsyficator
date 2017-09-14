@@ -20,3 +20,16 @@ $mainColor: #6765C6;
 	}
 
 }
+.Navbar.error{
+	background: #E74357;
+	width: 100vw;
+	margin: -5px -40px;
+	padding: 15px 20px 10px;
+	height: 65px;
+	color: white;
+
+	.message{
+		font-size: 14px;
+		margin-top: 15px;
+	}
+}

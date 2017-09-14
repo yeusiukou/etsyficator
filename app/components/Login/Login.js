@@ -15,18 +15,21 @@ class Login extends Component {
 
 	logIn(e){
 		e.preventDefault();
-		if(this.state.shopName.length > 0)
+		if(this.state.shopName.match(/^\w+$/))
 			this.props.actions.logIn(this.state.shopName);
-		else this.setState({error: true})
+		else this.setState({error: true});
 	}
 	handleChange(e) {
     this.setState({shopName: e.target.value, error: false});
-  }
+	}
+	getError(){
+		return this.state.error ? 'Incorrect store name' : this.props.data.error;
+	}
 
 	render () {
 		return (
 			<div className="Login col-start-center">
-				<Navbar>Welcome</Navbar>
+				<Navbar error={this.getError()}>Welcome</Navbar>
 				<Banner 
 					title="Log in to your Shopify store"
 					text={this.state.shopName+".myshopify.com"} />

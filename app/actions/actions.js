@@ -37,6 +37,11 @@ export function logIn(shopName){
 			type: ActionTypes.SET_LOADING,
 			value: true
 		})
+		// Hide previous error message
+		dispatch({
+			type: ActionTypes.ERROR,
+			message: null
+		});
 		// Check if the shop exists
 		validateShop(shopName).then(() => {
 			chrome.identity.launchWebAuthFlow({ 
@@ -198,7 +203,6 @@ function validateShop(name){
 function showError(status){
 	return dispatch => {
 		let message = ERRORS[status] ? ERRORS[status] : "Error "+status;
-		console.log(message);
 		dispatch({
 			type: ActionTypes.ERROR,
 			message
