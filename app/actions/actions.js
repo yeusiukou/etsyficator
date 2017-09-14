@@ -91,9 +91,8 @@ function fetchUrl(dispatch, shopName){
 
 	const getId = function(url){
 		// get matches for 2 types of url: ...listing/269058820 and anchor_listing_id=467380344
-		const expr = url.match(/\listing\/([0-9])\w+|listing_id=([0-9])\w+/g );
-		// filter out the id number
-		return expr ? expr[0].match(/([0-9])\w+/g) : null
+		const match = /\listing\/(\d+)|listing_id=(\d+)/.exec(url);
+		return match ? match[1] : null;
 	}
 	// load listing from Etsy's api
 	const fetchListing = function(id){

@@ -7,9 +7,9 @@ const iconStyle = {
 	width: '40px',
 	height: '40px',
 	color: 'white',
-	fontSize: '80px',
+	fontSize: '60px',
 	top: '230px',
-	left: '105px',
+	left: '145px',
 	pointerEvents: 'none'
 }
 const barStyle = {
